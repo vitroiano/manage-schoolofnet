@@ -1,0 +1,57 @@
+### Criando uma funcao no namespace default para permitir acesso a leitura de pods ###
+
+apiVersion: rbac.authorization.8s.io/v1
+kind: Role
+metadata:
+    namespace: default
+    name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+
+
+### Roles para Cluster ###
+
+apiVersion: rbac.authorization.8s.io/v1
+kind: ClusterRole
+metadata:
+    # namespace: default
+    name: secret-reader
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "watch", "list"]
+
+####### Role Bindings ########
+
+apiVersion: rbac.authorization.8s.io/v1
+kind: RoleBinding
+metadata:
+    namespace: default
+    name: read-pods
+subjects:
+- kind: User
+  name: jane
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+
+####### Role Cluster Bindings ########
+
+apiVersion: rbac.authorization.8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+    #namespace: default
+    name: read-secrets-global
+subjects:
+- kind: Group
+  name: manager
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: secret-reader
+  apiGroup: rbac.authorization.k8s.io
