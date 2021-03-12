@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout external proj') {
             steps {
                 git branch: 'master',
-                credentialsId: "git_id",
+                credentialsId: '${git_id}',
                 url: 'http://git.franciscanos.net/moodle/frontend-ead-grade-dashboard.git'
 
                 sh "ls -lat"
