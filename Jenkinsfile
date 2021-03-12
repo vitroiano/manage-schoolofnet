@@ -39,7 +39,11 @@ pipeline {
             steps {
                 script {
                     sh 'echo ZIP dist'
-                    sh 'zip dist.zip dist'
+                    sh 'cd dist'
+                    sh 'zip dist.zip *'
+                    sh 'cp dist.zip ../'
+                    sh 'rm dist.zip'
+                    sh 'cd ..'
                 }
             }
         }
