@@ -10,6 +10,7 @@ pipeline {
 
                 sh "git checkout master"
                 sh "ls -lat"
+                sh 'pwd'
                 /*script {
                     if("$CHOICES".indexOf('build') != -1){
                         sh 'npm run build_prod'
