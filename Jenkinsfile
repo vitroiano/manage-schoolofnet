@@ -11,20 +11,8 @@ pipeline {
                 sh "git checkout master"
                 sh "pwd"
                 sh "ls -lat"
-                /*script {
-                    if("$CHOICES".indexOf('build') != -1){
-                        sh 'npm run build_prod'
-                    }else{
-                        sh 'echo Else'
-                    }
-                }*/
             }
         }
-        // stage('Checkout code') {
-        //     steps {
-        //         checkout scm
-        //     }
-        // }
         stage('Build'){
             steps{
                 script {
@@ -33,8 +21,18 @@ pipeline {
                         sh 'npm install'
                         sh 'npm run build_prod'
                     }else{
-                        sh 'echo ELSE'
+                        sh 'echo BUILD_DEV'
+                        sh 'npm install'
+                        sh 'npm run build_dev'
                     }
+                }
+            }
+        }
+        stage('Zip'){
+            steps {
+                script {
+                    sh 'echo ZIP dist'
+                    sh 'zip dist.zip dist'
                 }
             }
         }
