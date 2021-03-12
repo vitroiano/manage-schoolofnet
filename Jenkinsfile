@@ -1,16 +1,26 @@
 pipeline {
     agent any
-    parameters { choice(name: 'CHOICES', choices: ['build'], description: ' Teste Jenkins') }
+    parameters { choice(name: 'CHOICES', choices: ['build'], description: ' Teste Checkout Git into Jenkins') }
     stages {
-        stage('Test') {
+        stage('Checkout external proj') {
             steps {
-                script {
+                git branch: 'master',
+                credentialsId: 'git_id',
+                url: 'ssh://git.franciscanos.net/moodle/frontend-ead-grade-dashboard.git'
+
+                sh "ls -lat"
+                /*script {
                     if("$CHOICES".indexOf('build') != -1){
-                        sh 'node --version'
+                        sh 'npm run build_prod'
                     }else{
                         sh 'echo Else'
                     }
-                }
+                }*/
+            }
+        }
+        stage('Checkout code') {
+            steps {
+                checkout scm
             }
         }
     }
