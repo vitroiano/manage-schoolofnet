@@ -8,6 +8,7 @@ pipeline {
                 url: 'http://git.franciscanos.net/moodle/frontend-ead-grade-dashboard.git',
                 branch: 'master'
 
+                sh "git checkout master"
                 sh "ls -lat"
                 /*script {
                     if("$CHOICES".indexOf('build') != -1){
