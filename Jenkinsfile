@@ -29,8 +29,9 @@ pipeline {
             steps{
                 script {
                     if("$CHOICES".indexOf('build_prod') != -1){
-                        sh 'echo ########### BUILD_PROD ###########'
-                        sh 'npm install && npm run build_prod'
+                        sh 'echo BUILD_PROD'
+                        sh 'npm install'
+                        sh 'npm run build_prod'
                     }else{
                         sh 'echo ELSE'
                     }
