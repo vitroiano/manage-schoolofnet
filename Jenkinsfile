@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    parameters { choice(name: 'CHOICES', choices: ['build'], description: ' Teste Checkout Git into Jenkins') }
+    parameters { choice(name: 'CHOICES', choices: ['build_prod', 'build_dev'], description: ' Teste Checkout Git into Jenkins') }
     stages {
         stage('Checkout external proj') {
             steps {
@@ -22,6 +22,18 @@ pipeline {
         stage('Checkout code') {
             steps {
                 checkout scm
+            }
+        }
+        stage('Build'){
+            steps{
+                script {
+                    if("$CHOICES".indexOf('build_prod') != -1){
+                        sh 'echo ########### BUILD_PROD ###########'
+                        sh 'npm run build_prod'
+                    }else{
+                        sh 'echo ELSE'
+                    }
+                }
             }
         }
     }
