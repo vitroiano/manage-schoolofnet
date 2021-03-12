@@ -1,11 +1,22 @@
 pipeline {
-    agent {
-        docker 'node'
+    agent any
+    parameter {
+        choice {
+            name: 'build', 
+            choices: [ 'build' ]
+            descrition: ' Teste Build '
+        }
     }
     stages {
         stage('Test') {
             steps {
-                sh 'node --version'
+                script {
+                    if("$build".indexOf('build') != -1){
+                        sh 'node --version'
+                    }else{
+                        sh 'echo Else'
+                    }
+                }
             }
         }
     }
