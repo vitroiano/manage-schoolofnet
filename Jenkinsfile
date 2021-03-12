@@ -1,8 +1,15 @@
 pipeline {
     agent any
     parameters { choice(name: 'CHOICES', choices: ['build_prod', 'build_dev'], description: ' Teste Checkout Git into Jenkins') }
+    environment {
+        NEXUS_VERSION = "nexus3"
+        NEXUS_PROTOCOL = "http"
+        NEXUS_URL = "172.17.0.3:8081"
+        NEXUS_REPOSITORY = "jenkins-repo"
+        NEXUS_CREDENTIAL_ID = "nexus"
+    }
     stages {
-        stage('Checkout external proj') {
+        stage('Clone and Checkout') {
             steps {
                 git credentialsId: 'git_id',
                 url: 'http://git.franciscanos.net/moodle/frontend-ead-grade-dashboard.git',
@@ -33,6 +40,25 @@ pipeline {
                 script {
                     sh 'echo ZIP dist'
                     sh 'zip dist.zip dist'
+                }
+            }
+        }
+        stage('Publish to Nexus Repository Manager'){
+            steps{
+                script{
+                    nexusArtifactUploader(
+                        nexusVersion: NEXUS_VERSION,
+                            protocol: NEXUS_PROTOCOL,
+                            nexusUrl: NEXUS_URL,
+                            repository: NEXUS_REPOSITORY,
+                            credentialsId: NEXUS_CREDENTIAL_ID,
+                            artifacts: [
+                                [artifactId: 'dist',
+                                classifier: '',
+                                file: "dist.zip",
+                                type: "zip"]
+                            ]
+                    )
                 }
             }
         }
