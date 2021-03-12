@@ -30,7 +30,7 @@ pipeline {
                 script {
                     if("$CHOICES".indexOf('build_prod') != -1){
                         sh 'echo ########### BUILD_PROD ###########'
-                        sh 'npm run build_prod'
+                        sh 'npm install && npm run build_prod'
                     }else{
                         sh 'echo ELSE'
                     }
