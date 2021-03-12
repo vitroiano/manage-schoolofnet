@@ -1,17 +1,11 @@
 pipeline {
     agent any
-    parameters {
-        choice {
-            name: 'build', 
-            choices: [ 'build' ]
-            descrition: ' Teste Build '
-        }
-    }
+    parameters { choice(name: 'CHOICES', choices: ['build'], description: ' Teste Jenkins') }
     stages {
         stage('Test') {
             steps {
                 script {
-                    if("$build".indexOf('build') != -1){
+                    if("$CHOICES".indexOf('build') != -1){
                         sh 'node --version'
                     }else{
                         sh 'echo Else'
