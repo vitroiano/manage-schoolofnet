@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    parameter {
+    parameters {
         choice {
             name: 'build', 
             choices: [ 'build' ]
