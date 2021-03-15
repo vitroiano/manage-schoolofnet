@@ -8,7 +8,7 @@ pipeline {
         NEXUS_REPOSITORY = "jenkins-repo"
         NEXUS_CREDENTIAL_ID = "nexus"
     }
-    def dist_project = "dist-frontend-ead-grade-dashboard.zip"
+    //def dist_project = "dist-frontend-ead-grade-dashboard.zip"
     stages {
         stage('Clone and Checkout') {
             steps {
