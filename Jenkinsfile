@@ -54,7 +54,7 @@ pipeline {
                             repository: NEXUS_REPOSITORY,
                             credentialsId: NEXUS_CREDENTIAL_ID,
                             artifacts: [
-                                [artifactId: 'dist',
+                                [artifactId: "${env.JOB_BASE_NAME}",
                                 classifier: '',
                                 file: "dist.zip",
                                 type: "zip"]
