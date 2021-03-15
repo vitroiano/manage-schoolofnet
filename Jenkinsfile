@@ -4,10 +4,11 @@ pipeline {
     environment {
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "172.17.0.3:8081"
+        NEXUS_URL = "172.17.0.3:8081/repository/jenkins-repo/frontend-ead-grade-dashboard/"
         NEXUS_REPOSITORY = "jenkins-repo"
         NEXUS_CREDENTIAL_ID = "nexus"
     }
+    def dist_project = "dist-frontend-ead-grade-dashboard.zip"
     stages {
         stage('Clone and Checkout') {
             steps {
